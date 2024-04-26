@@ -1,0 +1,31 @@
+<%- include('partials/links') %>
+<%- include('partials/nav') %>
+
+<h2 class="display-4 blueborder center">List of Available Components</h2>
+<div class="container margin border center">
+    <p class="redcolor">Note: If your component is not here. We're very sorry. It would be added soon. For now, you can try selecting the component closest to you results would be the same.</p>
+</div>
+<div class="container marketing margin">
+    <div class="row btm">
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">List of Processor(s)</h2>
+        <% for(var i=0; i< processor.length; i++){ %>
+            <div class="row btm">
+                <div class="col-lg-7 margintop">
+                    <p class="text"><%= i+1 + ". " + processor[i].name %></p>
+                </div>
+            </div>
+        <% } %>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">List of GPU(s)</h2>
+        <% for(var j=0; j< gpu.length; j++){ %>
+            <div class="row btm">
+                <div class="col-lg-7 margintop">
+                    <p class="text"><%= j+1 + ". " + gpu[j].name %></p>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+<%- include('partials/footer') %>

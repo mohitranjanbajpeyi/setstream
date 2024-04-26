@@ -1,0 +1,164 @@
+<%- include('partials/links') %>
+<!DOCTYPE html>
+<html>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<body>
+<%- include('partials/nav') %>
+<!-- quote area -->
+<% var quoteInt = Math.floor(Math.random() * 10) %>
+<% var quotes = ["Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.", "So many books, so little time.", "A room without books is like a body without a soul.", "You only live once, but if you do it right, once is enough.", "In three words I can sum up everything I've learned about life: it goes on.", "Be the change that you wish to see in the world.", "Be yourself; everyone else is already taken.", "If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals.", "No one can make you feel inferior without your consent.", "If you tell the truth, you don't have to remember anything."]; %>
+<% var author = ["Albert Einstein", "Frank Zappa", "Marcus Tullius Cicero", "Mae West", "Robert Frost", "Mahatma Gandhi", "Oscar Wilde", "J.K Rowling", "Eleanor Roosevelt", "Mark Twain"]; %>
+<% var currentQuote = quotes[quoteInt].toString(); %>
+<% var currentAuthor = author[quoteInt].toString(); %>
+<div class="container border margin">
+<blockquote class="blockquote text-center margin">
+  <p class="mb-0"><%= currentQuote %></p>
+  <footer class="blockquote-footer"><%= currentAuthor%></footer>
+</blockquote>
+</div>
+  <div class="container">
+  <div class="body center">
+    <h1 class="display-3 font">SetStream</h1>
+    <p>Your one destination for setting up your encoding settings.</p>
+  </div>
+</div>
+<!-- body area -->
+<div class="container margin">
+    <div class="body center lightback">
+      <div class="container backborder margin">
+      <p class="margintop"><strong>What's your PC specifications?</strong></p>
+        <form action="/app" method="POST">
+          <div class="row formwidth center">
+            <div class="col">
+              <div class="container">
+                <p> <span><img class="space" src="/images/computer.png"></span>Processor</p>
+                <input type="text" name="processor" class="form-control center search-input-processor search-input blueborder" placeholder="e.g. i5 9400/Ryzen R5 1400" required>
+                <div class="suggestions-processor suggestions">      
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="row formwidth center">
+            <div class="col">
+              <div class="container">
+                <p> <span><img class="space" src="/images/gpu.png"></span>Graphics Card</p>
+                <input type="text" name="gpu" class="form-control center search-input-GPU search-input blueborder" placeholder="e.g. RX 570/GTX 1650" required>
+                <div class="suggestions-GPU suggestions">      
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row formwidth center">
+            <div class="col">
+              <p> <span><img class="space" src="/images/ram.png"></span>Memory</p>
+              <select name="memory" id="memory" required>
+                <option value="Select RAM" selected disabled hidden>Select RAM</option>
+                <option value="1">1 GB</option>  
+                <option value="2">2 GB</option>
+                <option value="4">4 GB</option>
+                <option value="6">6 GB</option>
+                <option value="8">8 GB</option>  
+                <option value="12">12 GB</option>
+                <option value="16">16 GB</option>
+                <option value="32">32 GB</option>
+                <option value="64">64 GB</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-dark  btn-lg marginbottom margin">Submit</button>
+          <p class="margintop redcolor">Note: If your Processor/GPU isn't available, check <a href="/components">List of Components.</a></p>
+        </form>
+      </div>
+  </div>
+</div>
+<div class="container center none">
+  <p>GPUs</p>
+  <p>----</p>
+  <% var gpustr = ""; %>
+  <% for(var j=0; j< gpu.length; j++){ %>
+    <% var currentGPU = gpu[j].name; %>
+    <% gpustr += currentGPU +"/" %>
+  <% } %>
+<p class="gpuname"><%= gpustr %></p>
+  <p>CPUs</p>
+  <p>----</p>
+<% var cpustr = ""; %>
+<% for(var i=0; i< processor.length; i++){ %>
+  <% var currentCPU = processor[i].name; %>
+  <% cpustr += currentCPU +"/" %>
+<% } %>
+<p class="cpuname"><%= cpustr %></p>
+</div>
+<%- include('partials/footer') %>
+<script>
+const cpuname = document.querySelector('.cpuname');
+const gpuname = document.querySelector('.gpuname');
+
+const singleCPU = cpuname.innerHTML.split('/');
+const singleGPU = gpuname.innerHTML.split('/');
+
+
+var processors = singleCPU;
+
+const searchInputProcessor = document.querySelector('.search-input-processor');
+const suggestionsPanelProcessor = document.querySelector('.suggestions-processor');
+
+searchInputProcessor.addEventListener('keyup', function() {
+  const input = searchInputProcessor.value.toLowerCase().toString();
+  suggestionsPanelProcessor.classList.add("show");
+  suggestionsPanelProcessor.innerHTML = '';
+  const suggestions = processors.filter(function(processor) {
+    return processor.toLowerCase().startsWith(input);
+  });
+  const results = suggestions.slice(0,3);
+  results.forEach(function(suggested) {
+    const div = document.createElement('div');
+    div.innerHTML = suggested;
+    div.setAttribute("class", "suggestion1");
+    suggestionsPanelProcessor.appendChild(div);
+  });
+  if (input === '') {
+    suggestionsPanelProcessor.innerHTML = '';  
+  }
+});
+document.addEventListener('click', function(e){
+    if(e.target.className === "suggestion1"){
+        searchInputProcessor.value = e.target.innerHTML;
+        suggestionsPanelProcessor.classList.remove("show");
+    }
+  });
+
+var GPU = singleGPU;
+
+const searchInputGPU = document.querySelector('.search-input-GPU');
+const suggestionsPanelGPU = document.querySelector('.suggestions-GPU');
+
+searchInputGPU.addEventListener('keyup', function() {
+  const input = searchInputGPU.value.toLowerCase();
+  suggestionsPanelGPU.classList.add("show");
+  suggestionsPanelGPU.innerHTML = '';
+  const suggestions1 = GPU.filter(function(country) {
+    return country.toLowerCase().startsWith(input);
+  });
+  const results = suggestions1.slice(0,3);
+  results.forEach(function(suggested) {
+    const div = document.createElement('div');
+    div.innerHTML = suggested;
+    div.setAttribute("class", "suggestion");
+    suggestionsPanelGPU.appendChild(div);
+  });
+  if (input === '') {
+    suggestionsPanelGPU.innerHTML = '';  
+  }
+
+  document.addEventListener('click', function(e){
+    if(e.target.className === "suggestion"){
+        searchInputGPU.value = e.target.innerHTML;
+        suggestionsPanelGPU.classList.remove("show");
+    }
+  });
+});
+
+</script>
+</body>
+</html>

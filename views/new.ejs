@@ -1,0 +1,82 @@
+<%- include ('partials/links') %>
+<%- include ('partials/nav') %>
+
+<div class="container margin">
+    <div class="row btm">
+        <div class="col-lg-6 blackborder center">
+            <div class="ui huge header"><h1>New Processor Component.</h1></div>
+                <form class="ui form" action="/components/processor" method="POST">
+                    <div class="field">
+                    <label for='processor[name]'>Name:</label>
+                    <input type="text" name="processor[name]" placeholder="name">
+                    </div>
+                    <div class="field">
+                        <label for='processor[score]'>Score:</label>
+                        <input type="text" name="processor[score]" placeholder="score">
+                    </div>
+                    <input class="ui violet blue button" type="submit">
+                </form>
+        </div>
+    <div class="col-lg-6 blackborder center">
+        <div class="ui huge header"><h1>New GPU Component.</h1></div>
+            <form class="ui form" action="/components/gpu" method="POST">
+                <div class="field">
+                    <label for='gpu[name]'>Name:</label>
+                    <input type="text" name="gpu[name]" placeholder="name">
+                </div>
+                <div class="field">
+                    <label for='gpu[score]'>Score:</label>
+                    <input type="text" name="gpu[score]" placeholder="score">
+                </div>
+                    <input class="ui violet blue button" type="submit">
+            </form>
+    </div>
+</div>
+<div class="container marketing margin">
+    <h2 class="display-3 center">Admin Page!</h2>
+    <div class="row btm margin">
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">List of Processor(s)</h2>
+        <% for(var i=0; i< processor.length; i++){ %>
+            <div class="row btm">
+                <div class="col-lg-7">
+                    <hr>
+                    <p class="text"><%= "Name: " + processor[i].name %></p>
+                <% if(admin == true){ %>             
+                    <p class="text"><%= "Score: " + processor[i].score %></p>
+                <% } %>
+                    <hr>
+                </div>
+                <% if(admin == true){ %>
+                <div class="col-lg-5">
+                    <form action="/app/components/processor/<%= processor[i]._id %>?_method=DELETE" method="POST">
+                        <button class="btn-xs"><i class="trash icon"></i></button>
+                    </form>
+                </div>
+                <% } %>
+            </div>
+        <% } %>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">List of GPU(s)</h2>
+        <% for(var j=0; j< gpu.length; j++){ %>
+            <div class="row btm">
+                <div class="col-lg-7">
+                    <hr>
+                    <p class="text"><%= "Name: " + gpu[j].name %></p>
+                <% if(admin == true){ %>             
+                    <p class="text"><%= "Score: " + gpu[j].score %></p>
+                <% } %>
+                <hr>
+                </div>
+                <% if(admin == true){ %>
+                <div class="col-lg-5">
+                    <form action="/app/components/gpu/<%= gpu[j]._id %>?_method=DELETE" method="POST">
+                        <button class="btn-xs"><i class="trash icon"></i></button>
+                    </form>
+                </div>
+                <% } %> 
+            </div>
+        <% } %>
+    </div>
+<%- include ('partials/footer') %>

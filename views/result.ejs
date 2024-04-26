@@ -1,0 +1,160 @@
+<%- include('partials/links') %>
+<%- include('partials/nav') %>
+<% var betterCPU; %>
+<% var err = true; %>
+<div class="container">
+    <a href="/"><img src="/images/back.png" id="backbtn"></a>
+</div>
+<h2 class="display-4 blueborder center">SetStream</h2>
+<div class="container marketing margin">
+    <div class="row btm">
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">Encoding Tab</h2>
+         <!-- obtaining scores for encoders -->
+         <% for(var i=0; i< serverCPU.length; i++){ %>
+            <% if(processor == serverCPU[i].name){ %>
+                <% var currentPScore = serverCPU[i].score; %>
+                <% err = false; %>
+            <% } %>
+        <% } %>
+        <% for(var j=0; j< serverGPU.length; j++){ %>
+            <% if(gpu == serverGPU[j].name) { %>
+                <% var currentGScore = serverGPU[j].score; %>
+                <% err = false; %>
+            <% } %> 
+        <% } %>
+        
+    <% if(err === false){ %>
+            <p class="text">1. Your OBS settings look kinda like this change your setting from simple to advanced.</p>
+        <img src="/images/obs.png" class="imageobs">
+        <% if(currentPScore <= 20 || currentGScore <= 20){ %>
+            <p class="text">Sorry, Stream settings not available cause components are too weak to handle. You should try upgrading.</p>
+        <% } else { %>
+      <!-- comparing scores -->
+      <% if(currentPScore > currentGScore){ %>
+        <% betterCPU = true; %>
+                <p class="text">2. Your processor is <%= processor %> and, your GPU is <%= gpu %> so, because you have a stronger processor than gpu.</p>
+                <p class="text">Set your encoder to x264.</p>
+                <p class="text">3. Set Keyframe Interval to 2.</p>
+                <% if(currentPScore >= 90){ %>
+                    <p class="text">4. Set usage preset to medium and profile to high.</p>
+                <% } else if(currentPScore >= 85){ %>
+                    <p class="text">4. Set usage preset to faster and profile to high.</p>
+                    <% } else { %>
+                    <p class="text">4. Set usage preset to veryfast and profile to high.</p>
+                    <% } %>
+        <% } else { %>
+            <!-- gpu is better -->
+            <% betterCPU = false; %>
+                <p class="text">2. Your gpu is <%= gpu %> and, your processor is <%= processor %> so, because you have a stronger gpu than processor.</p>
+                <p class="text">3. Set Keyframe Interval to 2.</p>
+                <p class="text">Set your encoder to NVENC(new)/AMD.</p>
+                <% if(currentGScore >= 90){ %>
+                    <p class="text">4. Set usage preset to Max Quality and profile to high.</p>
+                <% } else if(currentGScore >= 70){ %>
+                    <p class="text">4. Set usage preset to Quality and profile to high.</p>
+                <% } else { %>
+                        <p class="text">4. Set usage preset to performance and profile to high.</p>
+                <% } %>
+            <% } %>
+        <% } %>
+        
+            <p class="state none"><%= betterCPU %></p>
+         <p class="text">4. Go to <a href = "https://www.speedtest.net/">https://www.speedtest.net/</a> and give us your upload speed.</p>
+         <label>Upload Speed (in Mbps)</label>
+         <input type="text" name="gpu" class="form-control center search-input-GPU upload" placeholder="Type your Upload Speed here in Mbps.">
+         <p class="text">5. Set your bitrate to <span class="bitrate">(enter bitrate)</span></p>
+         <p class="text">6. Move to video Tab.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">Video Tab</h2>
+         <p class="text">1. Set your base canvas resolution to your monitor's resolution.</p>
+         <img src="/images/video.png" class="video">
+         <p class="text output">2. Enter your Bitrate to get output resolution.</p>
+         <p class="text">3. Set your filter to Lanczos.</p>
+         <p class="text">You're done! Happy Streaming!</p>
+         <a href="/app/recording" class="btn btn-lg btn-secondary margin">Next</a>
+    <% } else { %>
+        <p class="text margin">Error ocurred! CPU/GPU not found.</p>
+    <% } %>
+    </div><!-- /.row -->
+  <div>
+  </div>
+  <div class="container center none">
+    <p>GPUs</p>
+    <p>----</p>
+    <% var gpustr = ""; %>
+    <% for(var j=0; j< serverGPU.length; j++){ %>
+        <% if(gpu === serverGPU[j].name){ %>
+            <% var currentGPU = serverGPU[j].score; %>
+            <% gpustr += currentGPU %>
+        <% } %>
+    <% } %>
+  <p class="gpuname"><%= gpustr %></p>
+    <p>CPUs</p>
+    <p>----</p>
+  <% var cpustr = ""; %>
+  <% for(var i=0; i< serverCPU.length; i++){ %>
+    <% if(processor === serverCPU[i].name){ %>
+        <% var currentCPU = serverCPU[i].score; %>
+        <% cpustr += currentCPU%>
+    <% } %>
+  <% } %>
+  <p class="cpuname"><%= cpustr %></p>
+  </div>
+  <script>
+
+    
+    const cpuname = document.querySelector('.cpuname');
+    const gpuname = document.querySelector('.gpuname');  
+    const state = document.querySelector('.state');  
+
+
+    var cpuScore = cpuname.innerHTML;
+    var gpuScore = gpuname.innerHTML;
+
+    const upload = document.querySelector('.upload');
+    const bitrate = document.querySelector('.bitrate');
+    const output = document.querySelector('.output');
+    upload.addEventListener('keyup', function() {
+    const input = upload.value;
+    upload.innerHTML = '';
+    
+    if(state.innerHTML == "true") {
+        if(input >= 15 && cpuScore >= 90){
+            bitrate.innerHTML = 6000;
+            output.innerHTML = "2. Set your output resolution to 1080p and fps to 60.";
+        } else if(input >= 10 && cpuScore >= 80){
+            bitrate.innerHTML = 5000;
+            output.innerHTML = "2. Set your output resolution to 1080p and fps to 30.";
+        } else if(input > 5 && cpuScore <=80){
+            bitrate.innerHTML = 3000;
+            output.innerHTML = "2. Set your output resolution to 720p and fps to 60.";
+        } else{
+            bitrate.innerHTML = 2500;
+            output.innerHTML = "2. Set your output resolution to 720p/480p and fps to 30.";
+        }
+    }
+    
+    if(state.innerHTML == "false") {
+        if(input >= 15 && gpuScore >= 90){
+            bitrate.innerHTML = 6000;
+            output.innerHTML = "2. Set your output resolution to 1080p and fps to 60.";
+        } else if(input >= 10 && gpuScore >= 80){
+            bitrate.innerHTML = 5000;
+            output.innerHTML = "2. Set your output resolution to 1080p and fps to 30.";
+        } else if(input > 5 && gpuScore <=80){
+            bitrate.innerHTML = 3000;
+            output.innerHTML = "2. Set your output resolution to 720p and fps to 60.";
+        } else{
+            bitrate.innerHTML = 2500;
+            output.innerHTML = "2. Set your output resolution to 720p/480p and fps to 30.";
+        }
+    }
+    if (input === "") {
+        bitrate.innerHTML = "(enter bitrate)";
+        output.innerHTML = "2. Enter your Bitrate to get output resolution.";
+    }
+    });
+  </script>
+<%- include('partials/footer') %>

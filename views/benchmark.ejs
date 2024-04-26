@@ -1,0 +1,67 @@
+<%- include('partials/links') %>
+<%- include('partials/nav') %>
+<!-- logic -->
+<% for(var i=0; i< serverCPU.length; i++){ %>
+    <% if(processor === serverCPU[i].name){ %>
+        <% var currentPScore = serverCPU[i].score; %>
+    <% } %>
+ <% } %>
+ <% for(var j=0; j< serverGPU.length; j++){ %>
+    <% if(gpu === serverGPU[j].name) { %>
+        <% var currentGScore = serverGPU[j].score; %>
+    <% } %>
+<% } %>
+
+<div class="container">
+    <a href="/"><img src="/images/back.png" id="backbtn"></a>
+</div>
+<h2 class="display-4 blueborder center">Benchmark</h2>
+<div class="container marketing margin">
+    <div class="row btm">
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">Rate My PC</h2>
+         <p class="text">Your processor is <%= processor %> with <%= memory %> GB of ram.</p>
+         <p class="text">Your processor has a percent score of <span class="pScore"><%= currentPScore %></span> in line of cpu(s).</p>
+         <!-- graph -->
+         <div class="graph"><div class="graph-inside-p"></div></div>
+         <p class="text">For, Graphics Processing, Your Graphics Card is <%= gpu %></p>
+         <p class="text">Your GPU has a percent score of <span class="gScore"><%= currentGScore %></span> in line of gpu(s).</p>
+         <!-- graph -->
+         <div class="graph  marginbottom"><div class="graph-inside-g"></div></div>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-6 blackborder center">
+         <h2 class="display-4 blueborder">What's Upgradable?</h2>
+         <% var x=0; %>
+         <% if(currentPScore > currentGScore){ %>
+            <p class="text">Your GPU is <%= gpu %>. It is the weakest part of your PC so, it is most upgradable.</p>
+            <p class="text">Some recomendations are:</p>
+            <div class="container border">
+                <% for(var j=0; j< serverGPU.length; j++){ %>
+                        <% if(currentGScore < serverGPU[j].score && x < 3) { %>
+                            <p class="text"><%= serverGPU[j].name %></p>
+                            <% x++; %>
+                        <% } %>
+                <% } %>
+            </div>
+            <% } else { %>
+                <p class="text">Your Processor is <%= processor %>. It is the weakest part of your PC so, it is most upgradable.</p>
+                <p class="text">Some recomendations are:</p>
+                <div class="container border">
+                    <% for(var j=0; j< serverCPU.length; j++){ %>
+                            <% if(currentPScore < serverCPU[j].score && x < 3) { %>
+                                <p class="text"><%= serverCPU[j].name %></p>
+                                <% x++; %>
+                            <% } %>
+                    <% } %>
+                </div>
+            <% } %>
+    </div><!-- /.row -->
+    <script>
+        const scoreValP = document.querySelector(".graph-inside-p");
+        const scoreValG = document.querySelector(".graph-inside-g");
+        const gScore = document.querySelector(".gScore");
+        const pScore = document.querySelector(".pScore");
+        scoreValP.style.width = $('.pScore').text() * 5.35;
+        scoreValG.style.width = $('.gScore').text() *5.35;
+    </script>
+<%- include('partials/footer') %>

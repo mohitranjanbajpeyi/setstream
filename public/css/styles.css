@@ -1,0 +1,199 @@
+
+/* home i.e streamsets */
+
+.navclass {
+    background-color: black;
+    color: white;
+}
+.body {
+    background-color: white;    
+    color: black;
+}
+.center {
+    text-align: center;
+    margin: 0 auto;
+}
+.formwidth{
+    width: 30%;
+    margin-top: 7px;
+}   
+.underline{
+    text-decoration: underline;
+}
+.backborder  {
+    border: 1px solid black;
+}
+.bottom {
+    bottom: 0; 
+    width:100%; 
+    text-align: center;    
+}
+.margin{
+    margin-top: 30px;
+}
+.lightback{
+    background-color: #ededed;
+}
+.marginbottom{
+    margin-bottom: 10px;
+}
+.margintop{
+    margin-top: 10px;
+}
+.space {
+    padding-right: 7px;
+}
+.font{
+    font-family: 'Chelsea Market', cursive;
+}
+/* streamsets end */
+
+/* footer */
+.blueborder{
+    border-bottom:  1px solid #006c9c;
+}
+
+/* from anonymous */
+.suggestions {
+    border-top: 1px solid blue;
+    display: none;
+  }
+  .suggestions.show{
+      display: block;
+  }
+  .suggestions > div {
+    padding: 5px;
+    font-size: 15px;
+    color: black;
+    border: 1px solid black;
+    border-top: 1px solid blue;
+    cursor: pointer;
+    background-color: white;
+  }
+  .suggestions > div:hover {
+    background-color: #1e4dd4;
+  }
+  /* results page*/
+  #backbtn{
+      width: 40px;
+      height: 40px;
+      margin-top: 20px;
+  }
+  .blackborder{
+      border: 1px solid black;
+  }
+  .text{
+      font-size: x-large;
+  }
+  .imageobs {
+      width: 100%;
+  }
+  .btm{
+      padding-bottom: 0px;
+  }
+  .video{
+      width:100%;
+      height: 40%;
+  }
+  .graph{
+      width: 100%;
+      height: 40px;
+      border: 2px solid black;
+  }
+  .graph-inside-p{
+      background-color: blue;
+      height:36px;
+  }
+  .graph-inside-g{
+    background-color: blue;
+    height:36px;
+}
+.imagehelp{
+    width:100%;
+    margin-top: 30px;
+}
+.redcolor{
+    color: red;
+}
+/* components */
+.inlinedisplay {
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+.none{
+    display:none;
+}
+
+.bg-modal {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+    height: 100%;
+    Position: fixed;
+    Z-index: 2;
+	top: 0;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-contents {
+	height: 300px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+.close {
+	position: absolute;
+	top: 0;
+	right: 14px;
+	font-size: 42px;    
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+.width{
+    width: 50px;
+}
+.zero{
+    margin : 0px;
+    margin-bottom: 14px;
+}
+.del {
+    background-color: white;
+    border: none;
+    font-size: x-large;
+}
+.right{
+    text-align: right;
+}
+.titleforum{
+    padding-top: 10px;
+    text-decoration: underline;
+}
+.bodyforum{
+   border: 1px dashed black;
+}
+.likes{
+    text-align: left;
+    float: left;
+}
+.loginfrm{
+    width: 30%; 
+    margin: 0 auto;
+}
+.imagerecord{
+    width:50%;
+}

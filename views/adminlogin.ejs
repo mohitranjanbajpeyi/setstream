@@ -1,0 +1,22 @@
+<%- include('partials/links') %>
+<%- include('partials/nav') %>
+
+<div class="container center margin">
+    <h1 id="h1">Only for developers!</h1>
+    <div class="loginfrm">
+        <form action="/admin" method="POST">
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="Username" name="username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" placeholder="Password" name="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control btn-primary" type="submit" value="Login">  
+        </div>
+        </form>
+        <a href="/" >Go back</a>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
